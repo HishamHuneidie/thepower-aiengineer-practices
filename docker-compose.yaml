@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/app/Dockerfile
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: thepower
+      POSTGRES_USER: thepower
+      POSTGRES_PASSWORD: thepower
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/code/app
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - thepower-course
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: thepower
+      POSTGRES_USER: thepower
+      POSTGRES_PASSWORD: thepower
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.docker/db/dump.sql:/docker-entrypoint-initdb.d/01-dump.sql:ro
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U thepower -d thepower"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - thepower-course
+
+networks:
+  thepower-course:
+    driver: bridge
+
+volumes:
+  postgres_data:
