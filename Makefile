@@ -1,4 +1,5 @@
 DOCKER=docker compose -p thepower-course
+DOCKER_LANGFUSE=$(DOCKER)-langfuse -f ./repositories/langfuse/docker-compose.yml --env-file ./repositories/langfuse/.env
 
 # All about the app
 
@@ -24,6 +25,18 @@ build:
 
 .PHONY: rebuild
 rebuild: remove build
+
+.PHONY: langfuse-start
+langfuse-start:
+	$(DOCKER_LANGFUSE) up -d --build
+
+.PHONY: langfuse-restart
+langfuse-restart:
+	$(DOCKER_LANGFUSE) restart
+
+.PHONY: langfuse-stop
+langfuse-stop:
+	$(DOCKER) stop
 
 # All about de architecture
 

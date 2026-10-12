@@ -1,0 +1,30 @@
+PREGUNTA : ¿Cómo va el pedido 9999?
+ESPERADO : no existe
+RESPUESTA: Lo siento, pero parece que el pedido 9999 no existe en nuestro sistema. ¿Podrías proporcionar más información o el número del pedido correcto para que pueda ayudarte mejor?
+  contiene_dato: 1 (busca 'no existe')
+  juez_llm: 1 (SI)
+
+PREGUNTA : ¿En qué estado está el pedido 5678?
+ESPERADO : preparación
+RESPUESTA: El estado de tu pedido 5678 es "en preparación". No tenemos información sobre el transportista asignado ni sobre la fecha de llegada. Estamos trabajando para que tu pedido llegue lo antes posible.
+  contiene_dato: 1 (busca 'preparación')
+  juez_llm: 1 (SI)
+
+PREGUNTA : ¿Qué día llega el pedido 1234?
+ESPERADO : jueves
+RESPUESTA: El pedido 1234 se enviará con SEUR y llegará el jueves.
+  contiene_dato: 1 (busca 'jueves')
+  juez_llm: 0 (NO)
+
+PREGUNTA : ¿Qué transportista lleva el pedido 1234?
+ESPERADO : SEUR
+RESPUESTA: El transportista que lleva el pedido 1234 es SEUR. Se espera que llegue el jueves.
+  contiene_dato: 1 (busca 'SEUR')
+  juez_llm: 0 (NO)
+
+PREGUNTA : ¿Cómo va mi pedido 1234?
+ESPERADO : enviado
+RESPUESTA: Tu pedido 1234 ha sido enviado con SEUR y se espera que llegue el jueves. Puedes seguir el seguimiento del pedido en el sitio web del transportista.
+  contiene_dato: 1 (busca 'enviado')
+  juez_llm: 0 (NO)
+
