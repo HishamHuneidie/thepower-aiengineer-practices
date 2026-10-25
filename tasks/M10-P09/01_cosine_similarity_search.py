@@ -69,4 +69,4 @@ print(tabulate(results_table, headers=headers, tablefmt='rounded_grid'))
 
 # Clean all
 
-#delete_tables(conn)
+delete_tables(conn)
