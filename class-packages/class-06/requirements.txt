@@ -1,7 +1,0 @@
-langchain
-langgraph
-langchain-core
-langchain-ollama
-langfuse
-langsmith
-python-dotenv
