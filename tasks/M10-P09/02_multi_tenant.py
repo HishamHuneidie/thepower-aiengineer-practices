@@ -31,7 +31,7 @@ contents = [tuple_phrase[1] for tuple_phrase in PHRASES]
 
 print()
 print('Dataset')
-print(tabulate([[phrase] for phrase in contents], headers=['Tenant', 'Answer'], tablefmt='rounded_grid'))
+print(tabulate(PHRASES, headers=['Tenant', 'Answer'], tablefmt='rounded_grid'))
 print()
 
 # save in pg
