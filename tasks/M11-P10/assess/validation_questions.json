@@ -1,0 +1,84 @@
+{
+  "validation": [
+    {
+      "question": "¿En qué plataforma puedo ver las clases?",
+      "has_answer": true
+    },
+    {
+      "question": "¿Cómo recupero mi contraseña?",
+      "has_answer": true
+    },
+    {
+      "question": "¿Cuándo está abierta la academia entre semana?",
+      "has_answer": true
+    },
+    {
+      "question": "¿Cuánto tiempo tengo para consultar una clase grabada?",
+      "has_answer": true
+    },
+    {
+      "question": "¿Cuál es la contraseña de la red wifi de la academia?",
+      "has_answer": false
+    },
+    {
+      "question": "¿Qué se sirve en la cafetería de la academia?",
+      "has_answer": false
+    },
+    {
+      "question": "¿Cuánto cuesta el curso avanzado de Nube?",
+      "has_answer": false
+    },
+    {
+      "question": "¿Quién dirige la academia Nube?",
+      "has_answer": false
+    },
+    {
+      "question": "¿Cuánto cuesta el curso básico de Nube?",
+      "has_answer": true
+    },
+    {
+      "question": "¿Cómo se paga el curso básico?",
+      "has_answer": true
+    },
+    {
+      "question": "¿Qué días de la semana hay clases?",
+      "has_answer": true
+    },
+    {
+      "question": "¿Cuántos minutos dura cada clase?",
+      "has_answer": true
+    },
+    {
+      "question": "¿En qué formato se entrega el material del curso?",
+      "has_answer": true
+    },
+    {
+      "question": "¿A qué correo debo escribir para solicitar la baja?",
+      "has_answer": true
+    },
+    {
+      "question": "¿A qué hora empiezan las clases los martes?",
+      "has_answer": false
+    },
+    {
+      "question": "¿Cuántas semanas dura el curso básico?",
+      "has_answer": false
+    },
+    {
+      "question": "¿Cuál es el IBAN para pagar el curso?",
+      "has_answer": false
+    },
+    {
+      "question": "¿En qué fecha comienza la próxima edición del curso?",
+      "has_answer": false
+    },
+    {
+      "question": "¿Cuántos profesores imparten el curso básico?",
+      "has_answer": false
+    },
+    {
+      "question": "¿Cuál es el porcentaje de reembolso si solicito la baja?",
+      "has_answer": false
+    }
+  ]
+}
