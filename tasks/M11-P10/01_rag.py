@@ -6,7 +6,7 @@ CRAG
 
 
 from pathlib import Path
-from database import connect, search, ChunkSimilarity
+from database import connect, search, ChunkSimilarity, clean_db
 from chunking import prepare_chunks
 from reranking import reranking, assess
 from colorize import colorize
@@ -175,6 +175,7 @@ if __name__ == '__main__':
             print_line_splitter()
         except Exception as e:
             print()
+            clean_db(conn)
             print(colorize(str(e), 'red'))
             print(colorize('Bye bye', 'purple'))
             sys.exit(0)

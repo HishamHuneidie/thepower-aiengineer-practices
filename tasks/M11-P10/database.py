@@ -136,7 +136,7 @@ def connect() -> Connection:
 
 
 def create_tables(conn: Connection) -> None:
-    delete_chunks(conn)
+    clean_db(conn)
 
     conn.execute(
         sql.SQL("""
@@ -227,7 +227,7 @@ def insert_chunk(conn: Connection, chunk: Chunk) -> Chunk:
     return chunk
 
 
-def delete_chunks(conn: Connection) -> None:
+def clean_db(conn: Connection) -> None:
     conn.execute(
         sql.SQL('DROP TABLE IF EXISTS {}').format(sql.Identifier(TABLE_NAME_CHUNKS))
     )
