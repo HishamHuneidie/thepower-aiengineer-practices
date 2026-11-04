@@ -1,0 +1,408 @@
+{
+  "train": [
+    {
+      "prompt": "¿Cuál es el horario de atención de Nube?",
+      "completion": "La academia Nube atiende de lunes a viernes de 9:00 a 18:00."
+    },
+    {
+      "prompt": "¿A qué horas puedo contactar con la academia entre semana?",
+      "completion": "La academia Nube atiende de lunes a viernes de 9:00 a 18:00."
+    },
+    {
+      "prompt": "¿Cuándo abre y cierra Nube de lunes a viernes?",
+      "completion": "La academia Nube atiende de lunes a viernes de 9:00 a 18:00."
+    },
+    {
+      "prompt": "¿Abre Nube los sábados?",
+      "completion": "No. Los sábados la academia Nube está cerrada."
+    },
+    {
+      "prompt": "¿Puedo hacer un trámite administrativo en sábado?",
+      "completion": "No. Los sábados la academia Nube está cerrada."
+    },
+    {
+      "prompt": "¿Hay atención general el sábado?",
+      "completion": "No. Los sábados la academia Nube está cerrada."
+    },
+    {
+      "prompt": "¿Está abierta Nube durante el fin de semana del sábado?",
+      "completion": "No. Los sábados la academia Nube está cerrada."
+    },
+    {
+      "prompt": "¿Cuánto cuesta el curso básico de Nube?",
+      "completion": "El curso básico de Nube cuesta 60 euros."
+    },
+    {
+      "prompt": "¿Cuál es el precio publicado del curso básico?",
+      "completion": "El curso básico de Nube cuesta 60 euros."
+    },
+    {
+      "prompt": "¿Son 60 euros el importe de la matrícula del curso básico?",
+      "completion": "El curso básico de Nube cuesta 60 euros."
+    },
+    {
+      "prompt": "¿Cómo se paga el curso básico?",
+      "completion": "El curso básico se paga mediante transferencia bancaria."
+    },
+    {
+      "prompt": "¿Qué método de pago indica Nube para matricularse?",
+      "completion": "El curso básico se paga mediante transferencia bancaria."
+    },
+    {
+      "prompt": "¿Debo hacer una transferencia para abonar el curso básico?",
+      "completion": "El curso básico se paga mediante transferencia bancaria."
+    },
+    {
+      "prompt": "¿Qué operación bancaria se usa para pagar la matrícula?",
+      "completion": "El curso básico se paga mediante transferencia bancaria."
+    },
+    {
+      "prompt": "¿Qué días hay clases del curso básico?",
+      "completion": "Las clases del curso básico son los martes y jueves."
+    },
+    {
+      "prompt": "¿Cuándo se imparten las dos clases semanales?",
+      "completion": "Las clases del curso básico son los martes y jueves."
+    },
+    {
+      "prompt": "¿Hay clase los lunes o los martes?",
+      "completion": "Las clases del curso básico son los martes y jueves."
+    },
+    {
+      "prompt": "¿Cuánto dura cada clase?",
+      "completion": "Cada clase del curso básico dura 60 minutos."
+    },
+    {
+      "prompt": "¿Las sesiones son de una hora?",
+      "completion": "Cada clase del curso básico dura 60 minutos."
+    },
+    {
+      "prompt": "¿La clase del jueves dura lo mismo que la del martes?",
+      "completion": "Cada clase del curso básico dura 60 minutos."
+    },
+    {
+      "prompt": "¿Una clase del curso básico dura 90 minutos?",
+      "completion": "Cada clase del curso básico dura 60 minutos."
+    },
+    {
+      "prompt": "¿Dónde se ven las clases del curso?",
+      "completion": "Las clases del curso básico se ven en la plataforma CampusNube."
+    },
+    {
+      "prompt": "¿Cuál es la plataforma utilizada para las sesiones?",
+      "completion": "Las clases del curso básico se ven en la plataforma CampusNube."
+    },
+    {
+      "prompt": "¿Tengo que acudir físicamente para seguir las clases?",
+      "completion": "Las clases del curso básico se ven en la plataforma CampusNube."
+    },
+    {
+      "prompt": "¿En qué formato recibo el material?",
+      "completion": "El material del curso se entrega en formato PDF."
+    },
+    {
+      "prompt": "¿Me entregan los apuntes del curso en PDF?",
+      "completion": "El material del curso se entrega en formato PDF."
+    },
+    {
+      "prompt": "¿Qué tipo de archivo contiene el material de estudio?",
+      "completion": "El material del curso se entrega en formato PDF."
+    },
+    {
+      "prompt": "¿Con qué formato puedo consultar el material en mi tableta?",
+      "completion": "El material del curso se entrega en formato PDF."
+    },
+    {
+      "prompt": "¿Cuánto tiempo puedo ver las grabaciones?",
+      "completion": "Las grabaciones de las clases están disponibles durante 30 días."
+    },
+    {
+      "prompt": "¿Las clases grabadas siguen disponibles después de 30 días?",
+      "completion": "Las grabaciones de las clases están disponibles durante 30 días."
+    },
+    {
+      "prompt": "¿Puedo repasar una clase dos semanas después?",
+      "completion": "Las grabaciones de las clases están disponibles durante 30 días."
+    },
+    {
+      "prompt": "¿Cuál es el correo de soporte?",
+      "completion": "El correo de soporte es ayuda@nube.example."
+    },
+    {
+      "prompt": "¿A qué dirección escribo por una incidencia técnica?",
+      "completion": "El correo de soporte es ayuda@nube.example."
+    },
+    {
+      "prompt": "¿Dónde pregunto por el material o el pago?",
+      "completion": "El correo de soporte es ayuda@nube.example."
+    },
+    {
+      "prompt": "¿A qué buzón mando una consulta general sobre el curso?",
+      "completion": "El correo de soporte es ayuda@nube.example."
+    },
+    {
+      "prompt": "¿Cuánto tarda como máximo el soporte en responder?",
+      "completion": "El soporte responde en un máximo de 48 horas."
+    },
+    {
+      "prompt": "¿Cuál es el plazo máximo de respuesta de ayuda@nube.example?",
+      "completion": "El soporte responde en un máximo de 48 horas."
+    },
+    {
+      "prompt": "¿Debo esperar una semana para que soporte conteste?",
+      "completion": "El soporte responde en un máximo de 48 horas."
+    },
+    {
+      "prompt": "¿Qué asistencia necesito para el certificado?",
+      "completion": "Para obtener el certificado hay que asistir al 80 % de las clases."
+    },
+    {
+      "prompt": "¿Basta con asistir al 75 % de las clases?",
+      "completion": "Para obtener el certificado hay que asistir al 80 % de las clases."
+    },
+    {
+      "prompt": "¿El certificado depende de asistir a clase?",
+      "completion": "Para obtener el certificado hay que asistir al 80 % de las clases."
+    },
+    {
+      "prompt": "Si solo asistí a tres cuartas partes, ¿cumplo el requisito del certificado?",
+      "completion": "Para obtener el certificado hay que asistir al 80 % de las clases."
+    },
+    {
+      "prompt": "¿Cómo recibiré el certificado?",
+      "completion": "El certificado se envía por correo electrónico a quienes cumplen el requisito de asistencia."
+    },
+    {
+      "prompt": "¿Debo ir a la academia a recoger el certificado?",
+      "completion": "El certificado se envía por correo electrónico a quienes cumplen el requisito de asistencia."
+    },
+    {
+      "prompt": "¿Por qué medio se entrega el certificado a quienes cumplen la asistencia?",
+      "completion": "El certificado se envía por correo electrónico a quienes cumplen el requisito de asistencia."
+    },
+    {
+      "prompt": "¿A qué dirección pido la baja?",
+      "completion": "Para solicitar la baja hay que escribir a baja@nube.example."
+    },
+    {
+      "prompt": "¿Es ayuda@nube.example el correo indicado para solicitar la baja?",
+      "completion": "Para solicitar la baja hay que escribir a baja@nube.example."
+    },
+    {
+      "prompt": "¿Cómo comunico por escrito que quiero dejar el curso?",
+      "completion": "Para solicitar la baja hay que escribir a baja@nube.example."
+    },
+    {
+      "prompt": "¿Qué correo se usa específicamente para las bajas?",
+      "completion": "Para solicitar la baja hay que escribir a baja@nube.example."
+    },
+    {
+      "prompt": "¿Con cuánta antelación se pide la baja?",
+      "completion": "La baja debe solicitarse con al menos 7 días de antelación."
+    },
+    {
+      "prompt": "¿Puedo solicitar la baja para dentro de tres días?",
+      "completion": "La baja debe solicitarse con al menos 7 días de antelación."
+    },
+    {
+      "prompt": "¿Cuál es el plazo mínimo previo a la fecha deseada de baja?",
+      "completion": "La baja debe solicitarse con al menos 7 días de antelación."
+    },
+    {
+      "prompt": "¿Qué botón uso si olvidé mi contraseña?",
+      "completion": "Para recuperar la contraseña de CampusNube hay que pulsar Recuperar acceso."
+    },
+    {
+      "prompt": "¿Cómo inicio la recuperación de acceso a CampusNube?",
+      "completion": "Para recuperar la contraseña de CampusNube hay que pulsar Recuperar acceso."
+    },
+    {
+      "prompt": "¿Qué opción aparece en el inicio de sesión para restaurar la clave?",
+      "completion": "Para recuperar la contraseña de CampusNube hay que pulsar Recuperar acceso."
+    },
+    {
+      "prompt": "¿Cuál es el nombre del botón para restablecer el acceso?",
+      "completion": "Para recuperar la contraseña de CampusNube hay que pulsar Recuperar acceso."
+    },
+    {
+      "prompt": "¿Qué dirección debo introducir al recuperar el acceso?",
+      "completion": "Para recuperar el acceso, introduce el correo usado en la matrícula y sigue las instrucciones que recibirás por email."
+    },
+    {
+      "prompt": "¿Dónde llegan las instrucciones para una nueva contraseña?",
+      "completion": "Para recuperar el acceso, introduce el correo usado en la matrícula y sigue las instrucciones que recibirás por email."
+    },
+    {
+      "prompt": "¿Uso el correo con el que me matriculé para recuperar la cuenta?",
+      "completion": "Para recuperar el acceso, introduce el correo usado en la matrícula y sigue las instrucciones que recibirás por email."
+    },
+    {
+      "prompt": "¿Qué hago si no recibo el correo de recuperación?",
+      "completion": "Si el mensaje de recuperación no llega, revisa el correo introducido y la carpeta de spam; si persiste, escribe a ayuda@nube.example."
+    },
+    {
+      "prompt": "¿Debo mirar el spam si faltan las instrucciones para entrar?",
+      "completion": "Si el mensaje de recuperación no llega, revisa el correo introducido y la carpeta de spam; si persiste, escribe a ayuda@nube.example."
+    },
+    {
+      "prompt": "¿A quién contacto si no consigo restablecer mi acceso?",
+      "completion": "Si el mensaje de recuperación no llega, revisa el correo introducido y la carpeta de spam; si persiste, escribe a ayuda@nube.example."
+    },
+    {
+      "prompt": "He pulsado Recuperar acceso pero no llega el email, ¿cómo procedo?",
+      "completion": "Si el mensaje de recuperación no llega, revisa el correo introducido y la carpeta de spam; si persiste, escribe a ayuda@nube.example."
+    },
+    {
+      "prompt": "¿Qué hago si no recibo el certificado?",
+      "completion": "Si falta el certificado, revisa el spam y el correo de matrícula; si sigue sin aparecer, escribe a ayuda@nube.example."
+    },
+    {
+      "prompt": "¿Debo comprobar el spam si no encuentro mi certificado?",
+      "completion": "Si falta el certificado, revisa el spam y el correo de matrícula; si sigue sin aparecer, escribe a ayuda@nube.example."
+    },
+    {
+      "prompt": "¿A quién escribo si cumplí la asistencia pero el certificado no aparece?",
+      "completion": "Si falta el certificado, revisa el spam y el correo de matrícula; si sigue sin aparecer, escribe a ayuda@nube.example."
+    },
+    {
+      "prompt": "¿Tengo que conservar el justificante de pago?",
+      "completion": "Conviene guardar el justificante de la transferencia bancaria como comprobante del pago."
+    },
+    {
+      "prompt": "¿Para qué guardo el comprobante de la transferencia?",
+      "completion": "Conviene guardar el justificante de la transferencia bancaria como comprobante del pago."
+    },
+    {
+      "prompt": "¿Qué documento me puede ayudar si surge una duda sobre el pago?",
+      "completion": "Conviene guardar el justificante de la transferencia bancaria como comprobante del pago."
+    },
+    {
+      "prompt": "Si no recibo confirmación, ¿qué prueba bancaria es útil guardar?",
+      "completion": "Conviene guardar el justificante de la transferencia bancaria como comprobante del pago."
+    }
+  ],
+  "validation": [
+    {
+      "prompt": "¿Se atienden consultas un miércoles a las 11:00?",
+      "completion": "La academia Nube atiende de lunes a viernes de 9:00 a 18:00."
+    },
+    {
+      "prompt": "Si necesito consultar algo un sábado, ¿me atenderán ese día?",
+      "completion": "No. Los sábados la academia Nube está cerrada."
+    },
+    {
+      "prompt": "Quiero apuntarme al curso básico, ¿qué importe debo abonar?",
+      "completion": "El curso básico de Nube cuesta 60 euros."
+    },
+    {
+      "prompt": "¿Puedo pagar en efectivo según la información del curso?",
+      "completion": "El curso básico se paga mediante transferencia bancaria."
+    },
+    {
+      "prompt": "Si quiero reservar los días de clase, ¿cuáles son?",
+      "completion": "Las clases del curso básico son los martes y jueves."
+    },
+    {
+      "prompt": "¿Cuánto tiempo reservo para una sesión?",
+      "completion": "Cada clase del curso básico dura 60 minutos."
+    },
+    {
+      "prompt": "¿Por dónde entro a una clase de Nube?",
+      "completion": "Las clases del curso básico se ven en la plataforma CampusNube."
+    },
+    {
+      "prompt": "¿El material se recibe en papel o en formato digital?",
+      "completion": "El material del curso se entrega en formato PDF."
+    },
+    {
+      "prompt": "¿Cuál es el plazo de acceso a una grabación?",
+      "completion": "Las grabaciones de las clases están disponibles durante 30 días."
+    },
+    {
+      "prompt": "¿Puedo consultar una duda sobre el certificado por correo?",
+      "completion": "El correo de soporte es ayuda@nube.example."
+    },
+    {
+      "prompt": "Si escribo al equipo de ayuda, ¿qué plazo de respuesta indica Nube?",
+      "completion": "El soporte responde en un máximo de 48 horas."
+    },
+    {
+      "prompt": "¿Qué porcentaje de sesiones debo completar para certificarme?",
+      "completion": "Para obtener el certificado hay que asistir al 80 % de las clases."
+    },
+    {
+      "prompt": "¿Me mandan el certificado a la dirección de mi matrícula?",
+      "completion": "El certificado se envía por correo electrónico a quienes cumplen el requisito de asistencia."
+    },
+    {
+      "prompt": "¿A qué buzón envío una solicitud de baja?",
+      "completion": "Para solicitar la baja hay que escribir a baja@nube.example."
+    },
+    {
+      "prompt": "Si quiero dejar el curso en una semana, ¿cuándo debo avisar?",
+      "completion": "La baja debe solicitarse con al menos 7 días de antelación."
+    },
+    {
+      "prompt": "Si no puedo entrar por haber olvidado la contraseña, ¿qué pulso?",
+      "completion": "Para recuperar la contraseña de CampusNube hay que pulsar Recuperar acceso."
+    },
+    {
+      "prompt": "Tras pulsar Recuperar acceso, ¿qué datos pongo?",
+      "completion": "Para recuperar el acceso, introduce el correo usado en la matrícula y sigue las instrucciones que recibirás por email."
+    },
+    {
+      "prompt": "¿Qué compruebo antes de avisar a soporte por un fallo de recuperación?",
+      "completion": "Si el mensaje de recuperación no llega, revisa el correo introducido y la carpeta de spam; si persiste, escribe a ayuda@nube.example."
+    },
+    {
+      "prompt": "¿Qué dirección de correo debo revisar para encontrar el certificado?",
+      "completion": "Si falta el certificado, revisa el spam y el correo de matrícula; si sigue sin aparecer, escribe a ayuda@nube.example."
+    },
+    {
+      "prompt": "Tras transferir los 60 euros, ¿qué comprobante conservo?",
+      "completion": "Conviene guardar el justificante de la transferencia bancaria como comprobante del pago."
+    }
+  ],
+  "test": [
+    {
+      "prompt": "¿Estará abierta la academia un viernes a las 17:00?",
+      "completion": "La academia Nube atiende de lunes a viernes de 9:00 a 18:00."
+    },
+    {
+      "prompt": "¿Cuánto dinero necesito para pagar el curso básico?",
+      "completion": "El curso básico de Nube cuesta 60 euros."
+    },
+    {
+      "prompt": "¿Qué días de la semana debo conectarme a clase?",
+      "completion": "Las clases del curso básico son los martes y jueves."
+    },
+    {
+      "prompt": "¿Qué plataforma me permite asistir en línea?",
+      "completion": "Las clases del curso básico se ven en la plataforma CampusNube."
+    },
+    {
+      "prompt": "¿Puedo recuperar en CampusNube una sesión grabada tras un mes?",
+      "completion": "Las grabaciones de las clases están disponibles durante 30 días."
+    },
+    {
+      "prompt": "¿En cuántas horas como máximo responde el soporte?",
+      "completion": "El soporte responde en un máximo de 48 horas."
+    },
+    {
+      "prompt": "Si cumplo el requisito, ¿llega el certificado en papel?",
+      "completion": "El certificado se envía por correo electrónico a quienes cumplen el requisito de asistencia."
+    },
+    {
+      "prompt": "¿Es válido avisar el mismo día que quiero causar baja?",
+      "completion": "La baja debe solicitarse con al menos 7 días de antelación."
+    },
+    {
+      "prompt": "¿Cómo sigo el proceso después de indicar mi correo de matrícula?",
+      "completion": "Para recuperar el acceso, introduce el correo usado en la matrícula y sigue las instrucciones que recibirás por email."
+    },
+    {
+      "prompt": "Si el certificado no llega tras comprobar mi buzón, ¿quién me ayuda?",
+      "completion": "Si falta el certificado, revisa el spam y el correo de matrícula; si sigue sin aparecer, escribe a ayuda@nube.example."
+    }
+  ]
+}
