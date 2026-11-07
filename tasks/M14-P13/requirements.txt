@@ -1,2 +1,7 @@
 typing_extensions
 peft
+trl
+transformers
+datasets
+torch
+tabulate
