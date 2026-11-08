@@ -2,30 +2,27 @@
 Has the orchestrator class with the patter design builder
 """
 
-
 # imports
 
 
-from typing_extensions import Self
-import time
-from typing import Any
-from threading import Event
-from itertools import cycle
-from colorize import colorize
-from peft import LoraConfig
-from trl import SFTConfig, SFTTrainer
-from transformers.utils import logging as hf_logging
-from transformers import PrinterCallback, TrainerCallback
-import sys
 import json
-from datasets import disable_progress_bar
-from pathlib import Path
+import time
 from datetime import datetime, timezone
+from itertools import cycle
+from pathlib import Path
+from threading import Event
 
+from datasets import disable_progress_bar
+from peft import LoraConfig
+from transformers import PrinterCallback, TrainerCallback
+from transformers.utils import logging as hf_logging
+from trl import SFTConfig, SFTTrainer
+from typing_extensions import Self
+
+from colorize import colorize
 
 hf_logging.disable_progress_bar()
 disable_progress_bar()
-
 
 # pre-configs
 
@@ -62,7 +59,7 @@ class Datasets:
 
 
 class TrainerConfig:
-    def __init__(self, ranker: int, target_modules: str|list[str], epochs: int, batch_size: int):
+    def __init__(self, ranker: int, target_modules: str | list[str], epochs: int, batch_size: int):
         self.ranker = ranker
         self.alpha = ranker * 2
         self.target_modules = target_modules
@@ -75,13 +72,15 @@ class Trainer:
     trainer_logs: list[str]
     trainer_progress: int
     results: list[Path] = []
+    adapters: list[tuple[str, str]] = []
+    global_started_at: None | datetime = None
 
-
-    def __init__(self, lora_config: TrainerConfig, datasets: Datasets, label: str):
+    def __init__(self, lora_config: TrainerConfig, index: int, datasets: Datasets, label: str):
         self.lora_config = lora_config
+        self.index = index
         self.datasets = datasets
         self.global_state = {
-            #'dataset': (False, 'Prepare datasets', 'Datasets are ready'),
+            # 'dataset': (False, 'Prepare datasets', 'Datasets are ready'),
             'train': (False, 'Train', 'Train is done'),
             'test': (False, 'Test', 'Test is done'),
             'results': (False, 'Generate stats', 'Stats generated'),
@@ -92,8 +91,8 @@ class Trainer:
         Trainer.trainer_progress = 0
         self.set_trainer()
         self.started_at = datetime.now(timezone.utc)
+        Trainer.global_started_at = Trainer.global_started_at or self.started_at
         self.old_lines_count = None
-
 
     def generate_global_state_str(self):
         from utils import process_log_line
@@ -111,7 +110,7 @@ class Trainer:
             for (done, loading_str, loaded_str) in self.global_state.values()
         ]
 
-        training_lines = ['']+Trainer.trainer_logs[-5:] if Trainer.trainer_logs else ['']
+        training_lines = [''] + Trainer.trainer_logs[-5:] if Trainer.trainer_logs else ['']
         training_progress_lines = process_log_line(f'{Trainer.trainer_progress:.0%}')
 
         return '\n'.join([
@@ -124,13 +123,11 @@ class Trainer:
             training_progress_lines,
         ])
 
-
     def update_state(self, step: str) -> Self:
         time.sleep(3)
         self.global_state[step] = (True, *self.global_state[step][1:])
 
         return self
-
 
     def show_state(self) -> None:
         from utils import print_replace
@@ -141,7 +138,6 @@ class Trainer:
 
         self.old_lines_count = len(lines)
 
-    
     def set_trainer(self) -> None:
         lora = LoraConfig(
             r=self.lora_config.ranker,
@@ -170,22 +166,19 @@ class Trainer:
         self.trainer.remove_callback(PrinterCallback)
         self.trainer.add_callback(CaptureLogs())
 
-
     def train(self) -> Self:
         self.trainer.train()
         self.update_state('train')
 
         return self
 
-
     def test(self) -> Self:
         results = self.trainer.evaluate(eval_dataset=self.datasets.test)
         self.update_state('test')
 
         self.save_results(results)
-        
-        return self
 
+        return self
 
     def save_results(self, results: dict) -> None:
         duration = datetime.now(timezone.utc) - self.started_at
@@ -215,24 +208,26 @@ class Trainer:
 
         from utils import date_to_str
 
+        self.global_date_str = date_to_str(Trainer.global_started_at)
         self.date_str = date_to_str(self.started_at)
-        suffix = result_files_suffix(self.lora_config)
-        file_path = Path(PERFORMANCE_FOLDER) / self.date_str / f'results-{suffix}.json'
+        suffix = result_files_suffix(self.lora_config, self.index + 1)
+        file_path = Path(PERFORMANCE_FOLDER) / self.global_date_str / f'results-{suffix}.json'
 
         file_path.parent.mkdir(parents=True, exist_ok=True)
         file_path.write_text(info_str, encoding='utf-8')
 
-        self.results.append(file_path)
+        Trainer.results.insert(self.index, file_path)
 
         self.update_state('results')
 
-
     def save(self) -> Self:
-        self.trainer.save_model(LORA_FOLDER_FINAL + '/' + self.date_str)
+        folder = LORA_FOLDER_FINAL + '/' + self.date_str
+        self.trainer.save_model(folder)
+        Trainer.adapters.insert(self.index, (self.label, folder))
+
         self.update_state('save')
 
         return self
-
 
     def release_resources(self) -> None:
         self.trainer.accelerator.free_momery()
@@ -243,10 +238,10 @@ def monitor_state(trainer: Trainer, stop: Event) -> None:
         trainer.show_state()
 
 
-def result_files_suffix(lora_config: TrainerConfig) -> None:
+def result_files_suffix(lora_config: TrainerConfig, version: int) -> str:
     r = lora_config.ranker
     a = lora_config.alpha
     ep = lora_config.epochs
     b = lora_config.batch_size
 
-    return f'r{r}_alpha{a}_ep{ep}_b{b}'
+    return f'v{version}-r{r}_alpha{a}_ep{ep}_b{b}'

@@ -1,32 +1,36 @@
 """
 Fine-tunning LLM with LoRA
 """
-import torch.cuda
 
 # imports
 
-
-from global_state import Trainer, monitor_state, TrainerConfig
-from threading import Thread, Event
-from utils import get_dataset
-import sys
-import time
 import gc
-import torch
-from pathlib import Path
 import json
+import time
+from threading import Thread, Event
+
+import torch
+import torch.cuda
 from tabulate import tabulate
 
+from colorize import colorize
+from global_state import Trainer, monitor_state, TrainerConfig
+from utils import get_dataset
 
-# pre-config
 # dataset
 
 datasets = get_dataset()
 
 
-# LoRA configs
-# train
-# save model
+def convert_duration_to_seconds(duration: str) -> int:
+    """Convert 00:00:00 into 000000 seconds"""
+    parts = duration.split(':')
+
+    return (
+            (int(parts[0]) * 3600) +
+            (int(parts[1]) * 60) +
+            int(parts[2])
+    )
 
 
 def release_resources(trainer: Trainer) -> None:
@@ -39,20 +43,18 @@ def release_resources(trainer: Trainer) -> None:
         torch.cuda.empty_cache()
 
 
-rankers = [4, 8, 16]
-target_module_list: list[str|list[str]] = [
+rankers = [4, 16]
+target_module_list: list[str | list[str]] = [
     ['q_proj', 'v_proj'],
-    ['q_proj', 'k_proj', 'q_proj', 'o_proj'],
-    'all-linear',
+    ['q_proj', 'k_proj', 'v_proj', 'o_proj'],
 ]
-epochs_list = [3, 5, 10]
-batch_size_list: list[int] = [1, 10, 20]
-
+epochs_list = [5, 20]
+batch_size_list: list[int] = [1, 10]
 
 if __name__ == '__main__':
 
     iterations_count = len(rankers) * len(target_module_list) * len(epochs_list) * len(batch_size_list)
-    i = 1
+    i = 0
 
     for ranker in rankers:
         for target_modules in target_module_list:
@@ -60,9 +62,11 @@ if __name__ == '__main__':
                 for batch_size in batch_size_list:
                     """Iterate through combinations"""
 
+                    i += 1
+
                     config = TrainerConfig(ranker, target_modules, epochs, batch_size)
 
-                    trainer = Trainer(config, datasets, f'Training {i}/{iterations_count}')
+                    trainer = Trainer(config, i - 1, datasets, f'Training {i}/{iterations_count}')
                     stop = Event()
 
                     monitor = Thread(
@@ -76,43 +80,58 @@ if __name__ == '__main__':
                     try:
                         (
                             trainer
-                                .train()
-                                .test()
-                                .save()
+                            .train()
+                            .test()
+                            .save()
                         )
 
                         time.sleep(.5)
 
-                        if i > 2:
-                            break
                     finally:
                         stop.set()
                         monitor.join()
                         trainer.show_state()
                         release_resources(trainer)
 
-                        i += 1
-
-files = [
-    Path('./results/performance/20261104_2227/results-r4_alpha8_ep3.json'),
-    Path('./results/performance/20261104_2232/results-r4_alpha8_ep3.json'),
-]
-
-headers_metrics = ['Label', 'Loss ▼', 'Accuracy ▲', 'Entropy ▼']
-headers_configs = ['Label', 'Duration', 'r/alph', 'Targets', 'Ep', 'Btch']
+headers_metrics = ['Label', 'Duration ▼', 'Loss ▼', 'Accuracy ▲', 'Entropy ▼']
+headers_configs = ['Label', 'r/alph', 'Targets', 'Ep', 'Btch']
 table_metrics = []
 table_configs = []
 
+best_metrics: dict[str, None | int | float] = {
+    'duration': None,
+    'loss': None,
+    'accuracy': None,
+    'entropy': None,
+}
 
-#for result in files:
 for result in Trainer.results:
     data = json.load(result.open())
 
-    print(data)
+    duration_seconds: int = convert_duration_to_seconds(data['duration'])
 
-    line_metrics = [data['label'], data['results']['eval_loss'], data['results']['eval_mean_token_accuracy'], data['results']['eval_entropy']]
+    if best_metrics['duration'] is None or best_metrics['duration'] > duration_seconds:
+        best_metrics['duration'] = duration_seconds
+
+    if best_metrics['loss'] is None or best_metrics['loss'] > data['results']['eval_loss']:
+        best_metrics['loss'] = data['results']['eval_loss']
+
+    if best_metrics['accuracy'] is None or best_metrics['accuracy'] < data['results']['eval_mean_token_accuracy']:
+        best_metrics['accuracy'] = data['results']['eval_mean_token_accuracy']
+
+    if best_metrics['entropy'] is None or best_metrics['entropy'] > data['results']['eval_entropy']:
+        best_metrics['entropy'] = data['results']['eval_entropy']
+
+    line_metrics = [
+        data['label'],
+        data['duration'],
+        data['results']['eval_loss'],
+        data['results']['eval_mean_token_accuracy'],
+        data['results']['eval_entropy']
+    ]
+
     line_configs = [
-        data['label'], data['duration'],
+        data['label'],
         f'{data["trainer"]["config"]["ranker"]} / {data["trainer"]["config"]["alpha"]}',
         str(data['trainer']['config']['targets']),
         data['trainer']['config']['epochs'],
@@ -122,6 +141,18 @@ for result in Trainer.results:
     table_metrics.append(line_metrics)
     table_configs.append(line_configs)
 
+for metric_row in table_metrics:
+    if convert_duration_to_seconds(metric_row[1]) == best_metrics['duration']:
+        metric_row[1] = colorize(metric_row[1], 'green')
+
+    if metric_row[2] == best_metrics['loss']:
+        metric_row[2] = colorize(metric_row[2], 'green')
+
+    if metric_row[3] == best_metrics['accuracy']:
+        metric_row[3] = colorize(metric_row[3], 'green')
+
+    if metric_row[4] == best_metrics['entropy']:
+        metric_row[4] = colorize(metric_row[4], 'green')
 
 print()
 print(tabulate(table_metrics, headers=headers_metrics, tablefmt='rounded_grid'))

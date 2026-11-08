@@ -2,17 +2,16 @@
 Methods to help development
 """
 
-
 # imports
 
-
 import json
-from pathlib import Path
-from global_state import Datasets
-from datasets import Dataset
-from typing import Any
 from datetime import datetime
+from pathlib import Path
+from typing import Any
 
+from datasets import Dataset
+
+from global_state import Datasets
 
 folders = {
     'current': Path(__file__).parent,
@@ -21,7 +20,7 @@ folders = {
 }
 
 
-def print_replace(lines: str, mandatory_count_lines: int|None = None) -> None:
+def print_replace(lines: str, mandatory_count_lines: int | None = None) -> None:
     count_lines = mandatory_count_lines if mandatory_count_lines else len(lines.splitlines())
     backlines = f'\033[{count_lines}F\033[J'
 
@@ -55,4 +54,4 @@ def process_log_line(log: Any) -> str:
 
 
 def date_to_str(date: datetime) -> str:
-    return date.strftime("%Y%m%d_%H%M")
+    return date.strftime("%Y%m%d_%H%M%S")
