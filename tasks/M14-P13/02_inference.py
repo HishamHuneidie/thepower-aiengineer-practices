@@ -81,15 +81,6 @@ for key, model in zip(responses_by_model.keys(), models):
         responses_by_model[key].append(tokenizer.decode(new_tokens, skip_special_tokens=True))
 
 
-# TODO: mostrar aqui las respuestas con el siguiente formato:
-# pregunta: XXXX1
-# respuesta de original_model: YYYY1
-# respuesta de trained_model: ZZZZ1
-#
-# pregunta: XXXX2
-# respuesta de original_model: YYYY2
-# respuesta de trained_model: ZZZZ2
-
 for i, question in enumerate(questions):
     print(colorize('Pregunta: ', 'purple') + question['content'])
     print(colorize('Respuesta del modelo original: ', 'purple') + responses_by_model['original_model'][i])

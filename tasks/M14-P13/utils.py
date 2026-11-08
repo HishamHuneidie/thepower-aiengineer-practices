@@ -77,10 +77,3 @@ def load_model(adapter_folder: None | str=None) -> PreTrainedModel | PeftModel:
     trained_model.eval()
 
     return trained_model
-
-
-def output_to_str(tokenizer, inputs: BatchEncoding, outputs: Tensor) -> str:
-    prompt_length = inputs['input_ids'].shape[1]
-    new_tokens = outputs[0][prompt_length:]
-
-    return tokenizer
