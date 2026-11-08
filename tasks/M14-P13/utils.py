@@ -10,8 +10,11 @@ from pathlib import Path
 from typing import Any
 
 from datasets import Dataset
+from transformers import PreTrainedModel, BatchEncoding
+from peft import PeftModel
 
 from global_state import Datasets
+from torch import Tensor
 
 folders = {
     'current': Path(__file__).parent,
@@ -55,3 +58,29 @@ def process_log_line(log: Any) -> str:
 
 def date_to_str(date: datetime) -> str:
     return date.strftime("%Y%m%d_%H%M%S")
+
+
+def load_model(adapter_folder: None | str=None) -> PreTrainedModel | PeftModel:
+    """Load model with or without LoRA adapter"""
+
+    from transformers import AutoModelForCausalLM
+
+    OPEN_MODEL_ID = 'Qwen/Qwen3-0.6B'
+
+    model = AutoModelForCausalLM.from_pretrained(OPEN_MODEL_ID, device_map='auto')
+
+    if not adapter_folder:
+        model.eval()
+        return model
+
+    trained_model = PeftModel.from_pretrained(model, adapter_folder)
+    trained_model.eval()
+
+    return trained_model
+
+
+def output_to_str(tokenizer, inputs: BatchEncoding, outputs: Tensor) -> str:
+    prompt_length = inputs['input_ids'].shape[1]
+    new_tokens = outputs[0][prompt_length:]
+
+    return tokenizer
