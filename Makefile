@@ -55,6 +55,10 @@ utils-stop:
 utils-remove:
 	$(DOCKER_UTILS) down -v
 
+.PHONY: utils-bash
+utils-bash:
+	$(DOCKER_UTILS) exec -it postgres env GPASSWORD=postgres_password psql -U postgres_user -d postgres_db
+
 # All about de architecture
 
 .PHONY: context-new
