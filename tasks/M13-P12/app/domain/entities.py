@@ -8,3 +8,5 @@ class Message:
     text: str
     role: Literal["user", "assistant"]
     id: UUID = field(default_factory=uuid4)
+    audio_path: str | None = None
+    image_path: str | None = None

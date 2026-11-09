@@ -1,4 +1,4 @@
-name: thepower-m13-p12
+name: thepower-course-m13-p12
 
 services:
   app:
@@ -13,15 +13,40 @@ services:
       POSTGRES_PASSWORD: thepower
       MODEL_EMBEDDING_NAME: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
       HF_HOME: /models
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: thepower
+      MINIO_SECRET_KEY: thepower-minio
+      MINIO_BUCKET: chat-files
     ports:
       - "8000:8000"
     volumes:
       - ./app:/code/app
       - ./.docker/app/documents:/code/documents:ro
       - embedding_models:/models
+      - uploads:/code/legacy_uploads:ro
     depends_on:
       db:
         condition: service_healthy
+      minio:
+        condition: service_healthy
+
+  minio:
+    # Imagen de MinIO publicada por Coollabs; los registros originales no la sirven.
+    image: ghcr.io/coollabsio/minio:RELEASE.2025-04-22T22-12-26Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: thepower
+      MINIO_ROOT_PASSWORD: thepower-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "mc alias set health http://localhost:9000 \"$${MINIO_ROOT_USER}\" \"$${MINIO_ROOT_PASSWORD}\" >/dev/null && mc ready health"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   db:
     image: pgvector/pgvector:pg16
@@ -43,3 +68,5 @@ services:
 volumes:
   postgres_data:
   embedding_models:
+  uploads:
+  minio_data:

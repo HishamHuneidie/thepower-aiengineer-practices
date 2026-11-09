@@ -31,11 +31,19 @@ h1 { margin: 0; font-size: 24px; }
 .assistant { background: #f1f5f9; }
 form { border-top: 1px solid #e2e8f0; }
 label { display: block; margin-bottom: 8px; font-size: 14px; }
-.composer { display: flex; gap: 10px; }
+.composer { display: flex; flex-wrap: wrap; gap: 10px; }
+.composer input { flex-basis: 200px; }
 input, button { font: inherit; border-radius: 10px; padding: 12px; }
 input { min-width: 0; flex: 1; border: 1px solid #cbd5e1; }
 button { border: 0; background: #4338ca; color: #fff; cursor: pointer; }
 button:disabled { opacity: .6; cursor: wait; }
+.secondary { background: #e2e8f0; color: #1e293b; }
+#record[aria-pressed="true"] { background: #b91c1c; color: #fff; }
+#attachments > div:not([hidden]) { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+#attachments audio, .message audio { max-width: 100%; }
+#image-preview { max-width: 120px; max-height: 100px; object-fit: contain; }
+.message img { display: block; max-width: 100%; max-height: 240px; margin-top: 8px; border-radius: 8px; }
+.message audio { display: block; margin-top: 8px; }
 :focus-visible { outline: 3px solid #818cf8; outline-offset: 2px; }
 #status { min-height: 18px; margin: 8px 0 0; font-size: 13px; color: #64748b; }
 @media (max-width: 480px) {

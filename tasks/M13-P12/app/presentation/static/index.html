@@ -19,8 +19,21 @@
       <form id="chat-form">
         <label for="message">Tu mensaje</label>
         <div class="composer">
-          <input id="message" name="message" placeholder="Escribe aquí…" autocomplete="off" required>
+          <input id="message" name="message" placeholder="Escribe aquí…" autocomplete="off">
+          <button id="record" type="button" class="secondary" aria-pressed="false">Grabar</button>
+          <button id="attach" type="button" class="secondary">Imagen</button>
           <button id="send" type="submit">Enviar</button>
+        </div>
+        <input id="image-file" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+        <div id="attachments">
+          <div id="audio-draft" hidden>
+            <audio id="audio-preview" controls aria-label="Audio preparado para enviar"></audio>
+            <button id="remove-audio" type="button" class="secondary">Quitar audio</button>
+          </div>
+          <div id="image-draft" hidden>
+            <img id="image-preview" alt="Imagen preparada para enviar">
+            <button id="remove-image" type="button" class="secondary">Quitar imagen</button>
+          </div>
         </div>
         <p id="status" role="status"></p>
       </form>
