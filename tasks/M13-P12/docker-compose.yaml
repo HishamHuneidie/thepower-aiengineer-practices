@@ -11,16 +11,20 @@ services:
       POSTGRES_DB: thepower
       POSTGRES_USER: thepower
       POSTGRES_PASSWORD: thepower
+      MODEL_EMBEDDING_NAME: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+      HF_HOME: /models
     ports:
       - "8000:8000"
     volumes:
       - ./app:/code/app
+      - ./.docker/app/documents:/code/documents:ro
+      - embedding_models:/models
     depends_on:
       db:
         condition: service_healthy
 
   db:
-    image: postgres:16-alpine
+    image: pgvector/pgvector:pg16
     environment:
       POSTGRES_DB: thepower
       POSTGRES_USER: thepower
@@ -38,3 +42,4 @@ services:
 
 volumes:
   postgres_data:
+  embedding_models:
