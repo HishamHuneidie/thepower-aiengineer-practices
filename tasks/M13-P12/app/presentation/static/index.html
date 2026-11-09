@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M13-P12 · Chat</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/chat.js" defer></script>
+  </head>
+  <body>
+    <main class="chat">
+      <header>
+        <p class="eyebrow">THEPOWER · M13-P12</p>
+        <h1>Chat</h1>
+      </header>
+      <section id="messages" role="log" aria-label="Conversación" aria-live="polite">
+        <p id="empty">Escribe un mensaje para empezar.</p>
+      </section>
+      <form id="chat-form">
+        <label for="message">Tu mensaje</label>
+        <div class="composer">
+          <input id="message" name="message" placeholder="Escribe aquí…" autocomplete="off" required>
+          <button id="send" type="submit">Enviar</button>
+        </div>
+        <p id="status" role="status"></p>
+      </form>
+    </main>
+  </body>
+</html>
