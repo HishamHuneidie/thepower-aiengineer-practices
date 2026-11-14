@@ -1,4 +1,5 @@
 DOCKER=docker compose -p thepower-course-m13-p12
+DOCKER_EXEC=$(DOCKER) exec -it
 
 # All about the app
 

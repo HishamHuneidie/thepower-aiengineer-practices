@@ -12,11 +12,14 @@ services:
       POSTGRES_USER: thepower
       POSTGRES_PASSWORD: thepower
       MODEL_EMBEDDING_NAME: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+      IMAGE_MODEL_ID: gemma3:4b
+      GENER_MODEL_ID: llama3.2:3b
       HF_HOME: /models
       MINIO_ENDPOINT: minio:9000
       MINIO_ACCESS_KEY: thepower
       MINIO_SECRET_KEY: thepower-minio
       MINIO_BUCKET: chat-files
+      OLLAMA_HOST: http://ollama:11434
     ports:
       - "8000:8000"
     volumes:
@@ -29,9 +32,20 @@ services:
         condition: service_healthy
       minio:
         condition: service_healthy
+      ollama:
+        condition: service_healthy
+
+  ollama:
+    build:
+      context: .
+      dockerfile: .docker/ollama/Dockerfile
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   minio:
-    # Imagen de MinIO publicada por Coollabs; los registros originales no la sirven.
     image: ghcr.io/coollabsio/minio:RELEASE.2025-04-22T22-12-26Z
     command: server /data --console-address ":9001"
     environment:
@@ -68,5 +82,6 @@ services:
 volumes:
   postgres_data:
   embedding_models:
+  whisper_models:
   uploads:
   minio_data:

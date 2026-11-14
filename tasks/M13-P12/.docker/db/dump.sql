@@ -1,12 +1,13 @@
 CREATE TABLE IF NOT EXISTS messages (
     id UUID PRIMARY KEY,
-    text TEXT NOT NULL,
+    text TEXT,
     role VARCHAR(10) NOT NULL CHECK (role IN ('user', 'assistant')),
-    position BIGINT GENERATED ALWAYS AS IDENTITY UNIQUE
+    position BIGINT GENERATED ALWAYS AS IDENTITY UNIQUE,
+    audio_path TEXT,
+    image_path TEXT,
+    audio_transcript TEXT,
+    image_transcript TEXT
 );
-
-ALTER TABLE messages ADD COLUMN IF NOT EXISTS audio_path TEXT;
-ALTER TABLE messages ADD COLUMN IF NOT EXISTS image_path TEXT;
 
 CREATE EXTENSION IF NOT EXISTS vector;
 

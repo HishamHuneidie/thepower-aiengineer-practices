@@ -32,7 +32,9 @@ def chat(
             if upload is not None:
                 content = upload.file.read(10 * 1024 * 1024 + 1)
                 paths[kind + "_path"] = save_file(content, upload.content_type or "", kind)
+
         response = send_message(Message(text=message.strip(), role="user", **paths), repository)
+
         return response.text
     except Exception as error:
         for path in paths.values():

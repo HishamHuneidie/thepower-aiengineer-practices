@@ -38,7 +38,6 @@ def initialize_storage() -> None:
                 raise
             mime = next((mime for mime, suffix in FILE_TYPES.items() if suffix == path.suffix), "application/octet-stream")
             client.fput_object(BUCKET, path.name, str(path), content_type=mime)
-            print(f"Adjunto anterior copiado a MinIO: {path.name}", flush=True)
 
 
 def save_file(content: bytes, content_type: str, kind: str) -> str:
@@ -64,3 +63,10 @@ def get_file(name: str) -> tuple[bytes, str]:
     finally:
         response.close()
         response.release_conn()
+
+
+def locate_file_name(pathname: str) -> str:
+    if '/uploads/' in pathname:
+        return pathname[9:]
+
+    return pathname
