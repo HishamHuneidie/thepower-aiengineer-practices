@@ -18,6 +18,7 @@ FILE_TYPES = {
     "audio/ogg": ".ogg",
     "audio/mp4": ".m4a",
     "audio/wav": ".wav",
+    "audio/mpeg": ".mp3",
     "image/png": ".png",
     "image/jpeg": ".jpg",
     "image/webp": ".webp",

@@ -4,6 +4,14 @@ from typing import Literal
 from uuid import UUID, uuid4
 
 
+class Audio(BytesIO):
+    file_type = 'audio'
+
+
+class Image(BytesIO):
+    file_type = 'image'
+
+
 @dataclass
 class Message:
     role: Literal["user", "assistant"]
@@ -13,11 +21,4 @@ class Message:
     image_path: str | None = None
     audio_transcript: str | None = None
     image_transcript: str | None = None
-
-
-class Audio(BytesIO):
-    file_type = 'audio'
-
-
-class Image(BytesIO):
-    file_type = 'image'
+    response_in_audio_path: str | None = None

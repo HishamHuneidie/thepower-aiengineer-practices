@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS messages (
     audio_path TEXT,
     image_path TEXT,
     audio_transcript TEXT,
-    image_transcript TEXT
+    image_transcript TEXT,
+    response_in_audio_path TEXT
 );
 
 CREATE EXTENSION IF NOT EXISTS vector;

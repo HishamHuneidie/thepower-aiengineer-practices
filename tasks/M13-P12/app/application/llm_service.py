@@ -10,6 +10,7 @@ import whisper
 from tempfile import NamedTemporaryFile
 from dotenv import load_dotenv
 import os
+from gtts import gTTS
 
 
 load_dotenv()
@@ -69,6 +70,9 @@ class LLMService:
             What is a user message: Main instruction.
             What is an audio transcript: Secondary instruction or context.
             What is an image transcript: Context.
+            
+            MANDATORY AND CONSTRAINTS:
+            - You MUST reply with less than 80 characters NO MATTER WHAT.
         """
 
         human_message = f"""
@@ -94,3 +98,18 @@ class LLMService:
             return response.message.content
         except Exception as e:
             return ''
+
+
+    def generate_audio(self, text: str) -> Audio|None:
+        """Use a LLM model to transcribe this audio"""
+
+        audio = Audio()
+
+        try:
+            gTTS(text=text, lang='es', slow=False).write_to_fp(audio)
+            audio.seek(0)
+
+            return audio
+        except Exception as e:
+            print(e)
+            return None

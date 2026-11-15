@@ -7,9 +7,9 @@ class PostgresMessageRepository:
         with get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.executemany(
-                    """INSERT INTO messages (id, text, role, audio_path, image_path)
-                    VALUES (%s, %s, %s, %s, %s)""",
-                    [(message.id, message.text, message.role, message.audio_path, message.image_path)
+                    """INSERT INTO messages (id, text, role, audio_path, image_path, audio_transcript, image_transcript, response_in_audio_path)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                    [(message.id, message.text, message.role, message.audio_path, message.image_path, message.audio_transcript, message.image_transcript, message.response_in_audio_path)
                      for message in messages],
                 )
 

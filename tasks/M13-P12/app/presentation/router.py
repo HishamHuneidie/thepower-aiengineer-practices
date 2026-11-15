@@ -18,7 +18,7 @@ def index():
     return FileResponse(Path(__file__).parent / "static" / "index.html")
 
 
-@router.post("/chat", response_class=PlainTextResponse)
+@router.post("/chat")
 def chat(
     message: str = Form(""),
     audio: UploadFile | None = File(None),
@@ -35,7 +35,7 @@ def chat(
 
         response = send_message(Message(text=message.strip(), role="user", **paths), repository)
 
-        return response.text
+        return response
     except Exception as error:
         for path in paths.values():
             delete_file(path)

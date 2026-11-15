@@ -124,7 +124,7 @@ record.addEventListener("click", async () => {
   }
 });
 
-function addMessage(author, message, kind) {
+function addMessage(author, message, kind, autoplay=false) {
   document.getElementById("empty")?.remove();
   const bubble = document.createElement("div");
   bubble.className = `message ${kind}`;
@@ -145,6 +145,13 @@ function addMessage(author, message, kind) {
     audio.controls = true;
     audio.setAttribute("aria-label", "Audio adjunto");
     bubble.append(audio);
+  }
+  if (message.response_in_audio_path) {
+    const audio = document.createElement("audio");
+    audio.src = message.response_in_audio_path;
+    audio.controls = true;
+    bubble.append(audio);
+    if (autoplay) audio.play().catch(() => {});
   }
   messages.append(bubble);
   messages.scrollTop = messages.scrollHeight;
@@ -185,7 +192,7 @@ form.addEventListener("submit", async (event) => {
       audio_path: audioFile ? URL.createObjectURL(audioFile) : null,
       image_path: imageFile ? URL.createObjectURL(imageFile) : null,
     }, "user");
-    addMessage("Asistente", { text: await response.text() }, "assistant");
+    addMessage("Asistente", await response.json(), "assistant", true);
     input.value = "";
     clearAudio();
     clearImage();

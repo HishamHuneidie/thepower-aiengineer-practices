@@ -23,7 +23,7 @@ class AudioService(MultimediaService):
         return self.llm_service.read_audio(audio)
 
 
-    # TODO: Completar este metodo para generar respuestas por audio
-    #def generate(self) -> Speech:
-    #    """Convert text to speech"""
-    #    return Speech
+    def generate(self, text: str) -> Audio|None:
+        """Convert text to speech"""
+
+        return self.llm_service.generate_audio(text)
