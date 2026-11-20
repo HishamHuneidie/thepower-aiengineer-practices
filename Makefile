@@ -64,3 +64,9 @@ utils-bash:
 .PHONY: context-new
 context-new:
 	./scripts/context-new.sh
+
+# Git
+
+.PHONY: git-log
+git-log:
+	@git log -10 --pretty="%C(yellow)%as%Creset %C(yellow)%h%Creset %C(cyan)%S%Creset %C(red)%an%Creset %C(auto)%s%Creset"
