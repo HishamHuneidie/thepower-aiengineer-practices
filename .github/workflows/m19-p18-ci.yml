@@ -1,0 +1,35 @@
+name: CI M19-P18                                  # Pipeline name
+
+on:
+  push:                                           # Trigger
+    branches: ['master']
+    paths:                                        # Folders where pipeline sees to trigger the event
+      - 'tasks/M19-P18/**'
+      - '.github/workflows/m19-p18-ci.yml'
+
+jobs:
+  quality-job:
+    runs-on: ubuntu-latest                        # Operating system (it can be macos, win, or linux)
+    #environment: staging|pre|prod                # It is necessary just when vars are in a github environment
+    env:                                          # Variables de repo o de environment
+      MODEL_ID: ${{ vars.MODEL_ID }}
+    defaults:
+      run:
+        working-directory: tasks/M19-P18          # Folder where commands are run
+    steps:
+      - name: Provision (1/2)
+        uses: actions/checkout@v4
+
+      - name: Provision (2/2)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r .docker/app/requirements.txt
+
+      - name: Validate code
+        run: ruff check .
+
+      - name: Run tests
+        run: pytest -v

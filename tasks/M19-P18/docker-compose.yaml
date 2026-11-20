@@ -1,0 +1,14 @@
+name: thepower-course-m19-p18
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/app/Dockerfile
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/code/app
+      - ./tests:/code/tests
+      - ./pyproject.toml:/code/pyproject.toml
