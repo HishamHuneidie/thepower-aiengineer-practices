@@ -12,13 +12,16 @@ const audioPreview = document.getElementById("audio-preview");
 const imagePreview = document.getElementById("image-preview");
 const removeAudio = document.getElementById("remove-audio");
 const removeImage = document.getElementById("remove-image");
+const threadInput = document.getElementById("thread-id");
+const speakToggle = document.getElementById("speak");
+try { threadInput.value = localStorage.getItem("thread_id") || threadInput.value; } catch {}
 let audioFile = null;
 let imageFile = null;
 let recorder = null;
 let recordingTimer = null;
 
 function setBusy(busy) {
-  for (const control of [input, send, record, attach, imagePicker, removeAudio, removeImage]) {
+  for (const control of [input, send, record, attach, imagePicker, removeAudio, removeImage, threadInput]) {
     control.disabled = busy;
   }
 }
@@ -124,6 +127,26 @@ record.addEventListener("click", async () => {
   }
 });
 
+// La respuesta llega muchos segundos después del clic y algunos navegadores (Safari, Firefox)
+// bloquean entonces play(). Por eso se "desbloquea" un reproductor dentro del propio clic en Enviar
+// y se usa como respaldo si el audio de la burbuja no puede arrancar solo.
+const SILENT_WAV = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+const player = new Audio();
+
+function unlockPlayer() {
+  player.src = SILENT_WAV;
+  player.play().catch(() => {});
+}
+
+function autoplayReply(audio) {
+  audio.play().catch(() => {
+    player.src = audio.src;
+    player.play()
+      .then(() => audio.addEventListener("play", () => player.pause(), { once: true }))
+      .catch(() => { status.textContent = "El navegador bloqueó la reproducción automática. Pulsa ▶ para escuchar la respuesta."; });
+  });
+}
+
 function addMessage(author, message, kind, autoplay=false) {
   document.getElementById("empty")?.remove();
   const bubble = document.createElement("div");
@@ -151,17 +174,37 @@ function addMessage(author, message, kind, autoplay=false) {
     audio.src = message.response_in_audio_path;
     audio.controls = true;
     bubble.append(audio);
-    if (autoplay) audio.play().catch(() => {});
+    if (autoplay) autoplayReply(audio);
   }
   messages.append(bubble);
   messages.scrollTop = messages.scrollHeight;
 }
 
+function currentThread() {
+  const value = threadInput.value.trim();
+  return /^[A-Za-z0-9_-]{1,64}$/.test(value) ? value : null;
+}
+
+threadInput.addEventListener("change", () => {
+  const thread = currentThread();
+  if (!thread) {
+    status.textContent = "El thread_id solo admite letras, números, - y _.";
+    return;
+  }
+  try { localStorage.setItem("thread_id", thread); } catch {}
+  messages.replaceChildren();
+  const empty = document.createElement("p");
+  empty.id = "empty";
+  empty.textContent = "Escribe un mensaje para empezar.";
+  messages.append(empty);
+  loadHistory();
+});
+
 async function loadHistory() {
   setBusy(true);
   status.textContent = "Cargando conversación…";
   try {
-    const response = await fetch("/chat");
+    const response = await fetch("/chat?thread_id=" + encodeURIComponent(currentThread() || "default"));
     if (!response.ok) throw new Error("Error al cargar el historial");
     for (const message of await response.json()) {
       addMessage(message.role === "user" ? "Tú" : "Asistente", message, message.role);
@@ -178,15 +221,26 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const message = input.value.trim();
   if (send.disabled || (!message && !audioFile && !imageFile)) return;
+  const thread = currentThread();
+  if (!thread) {
+    status.textContent = "Revisa el thread_id antes de enviar.";
+    return;
+  }
   const data = new FormData();
   data.append("message", message);
+  data.append("thread_id", thread);
+  data.append("speak", speakToggle.checked ? "true" : "false");
   if (audioFile) data.append("audio", audioFile);
   if (imageFile) data.append("image", imageFile);
+  if (speakToggle.checked || audioFile) unlockPlayer();  // dentro del gesto del usuario
   setBusy(true);
   status.textContent = "Esperando respuesta…";
   try {
     const response = await fetch("/chat", { method: "POST", body: data });
-    if (!response.ok) throw new Error("Error al enviar el mensaje");
+    if (!response.ok) {
+      const detail = await response.json().catch(() => ({}));
+      throw new Error(detail.detail || "Error al enviar el mensaje");
+    }
     addMessage("Tú", {
       text: message,
       audio_path: audioFile ? URL.createObjectURL(audioFile) : null,
@@ -197,8 +251,8 @@ form.addEventListener("submit", async (event) => {
     clearAudio();
     clearImage();
     status.textContent = "";
-  } catch {
-    status.textContent = "No se pudo enviar. El mensaje y los adjuntos siguen preparados para volver a intentarlo.";
+  } catch (error) {
+    status.textContent = `No se pudo enviar (${error.message}). El mensaje y los adjuntos siguen preparados para volver a intentarlo.`;
   } finally {
     setBusy(false);
     input.focus();

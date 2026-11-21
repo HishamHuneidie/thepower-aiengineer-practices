@@ -25,3 +25,31 @@ CREATE TABLE IF NOT EXISTS document_chunks (
     embedding VECTOR(384) NOT NULL,
     UNIQUE (document_id, position)
 );
+
+CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+);
+
+-- S12: cada mensaje pertenece a una conversación (thread_id). El estado del grafo
+-- lo guarda aparte el checkpointer de LangGraph (tablas checkpoint*).
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS thread_id TEXT NOT NULL DEFAULT 'default';
+CREATE INDEX IF NOT EXISTS messages_thread_idx ON messages (thread_id, position);
+
+-- S12: trabajos de Gemini Deep Research. interaction_id es el id que devuelve Google.
+CREATE TABLE IF NOT EXISTS research_jobs (
+    interaction_id TEXT PRIMARY KEY,
+    thread_id TEXT NOT NULL,
+    question TEXT NOT NULL,
+    agent TEXT NOT NULL,
+    simulated BOOLEAN NOT NULL DEFAULT FALSE,
+    remote_status TEXT NOT NULL,
+    report TEXT,
+    sources JSONB NOT NULL DEFAULT '[]'::jsonb,
+    usage JSONB,
+    error TEXT,
+    poll_count INTEGER NOT NULL DEFAULT 0,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    completed_at TIMESTAMPTZ
+);

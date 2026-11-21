@@ -17,5 +17,16 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="M13-P12 · Chat", lifespan=lifespan)
+
+
+@app.middleware("http")
+async def no_cache_frontend(request, call_next):
+    # Evita que el navegador mezcle un index.html nuevo con un chat.js antiguo (o al revés).
+    response = await call_next(request)
+    if request.url.path == "/" or request.url.path.startswith("/static/"):
+        response.headers["Cache-Control"] = "no-cache"
+    return response
+
+
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.include_router(router)

@@ -26,6 +26,7 @@ def prepare_chunks() -> None:
         raise RuntimeError("No hay documentos .txt para generar los chunks")
 
     model = None
+    created = False
     with get_connection() as connection:
         # También prepara las tablas cuando el volumen de PostgreSQL ya existía.
         connection.execute((BASE_DIR / "schema.sql").read_text(encoding="utf-8"))
@@ -73,8 +74,14 @@ def prepare_chunks() -> None:
                     ],
                 )
             print(f"Creados {len(chunks)} chunks: {document.name}", flush=True)
+            created = True
 
-    print("Documentos preparados. Arrancando FastAPI.", flush=True)
+        if created:
+            # Los chunks cambiaron: el threshold guardado ya no es válido.
+            connection.execute("DELETE FROM settings WHERE key = 'threshold'")
+            print("Threshold invalidado por chunks nuevos.", flush=True)
+
+    print("Documentos preparados.", flush=True)
 
 
 if __name__ == "__main__":

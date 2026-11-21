@@ -11,15 +11,29 @@ services:
       POSTGRES_DB: thepower
       POSTGRES_USER: thepower
       POSTGRES_PASSWORD: thepower
+      TABLE_NAME_DOCUMENTS: documents
+      TABLE_NAME_CHUNKS: document_chunks
+      MODEL_RERANKER_NAME: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
       MODEL_EMBEDDING_NAME: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
-      IMAGE_MODEL_ID: gemma3:4b
-      GENER_MODEL_ID: llama3.2:3b
+      MODEL_EMBEDDING_DIMENSIONS: 384
       HF_HOME: /models
       MINIO_ENDPOINT: minio:9000
       MINIO_ACCESS_KEY: thepower
       MINIO_SECRET_KEY: thepower-minio
       MINIO_BUCKET: chat-files
-      OLLAMA_HOST: http://ollama:11434
+      # Gemini (la clave GEMINI_API_KEY va en .env, nunca en este archivo)
+      MULTIMODAL_MODEL_ID: ${MULTIMODAL_MODEL_ID:-gemini-3.8-flash}
+      TTS_MODEL_ID: ${TTS_MODEL_ID:-gemini-3.8-flash-lite-tts}
+      TTS_VOICE: ${TTS_VOICE:-Kore}
+      DEEP_RESEARCH_AGENT_ID: ${DEEP_RESEARCH_AGENT_ID:-deep-research-preview-04-2026}
+      RESEARCH_MAX_REAL_RUNS: ${RESEARCH_MAX_REAL_RUNS:-1}
+      RESEARCH_MAX_POLLS: ${RESEARCH_MAX_POLLS:-6}
+      RESEARCH_POLL_SECONDS: ${RESEARCH_POLL_SECONDS:-10}
+      AUDIO_MAX_SECONDS: ${AUDIO_MAX_SECONDS:-30}
+      EVIDENCE_DIR: /code/evidence
+    env_file:
+      - path: .env
+        required: false
     ports:
       - "8000:8000"
     volumes:
@@ -27,23 +41,13 @@ services:
       - ./.docker/app/documents:/code/documents:ro
       - embedding_models:/models
       - uploads:/code/legacy_uploads:ro
+      - ./evidence:/code/evidence
+      - ./inputs:/code/inputs
     depends_on:
       db:
         condition: service_healthy
       minio:
         condition: service_healthy
-      ollama:
-        condition: service_healthy
-
-  ollama:
-    build:
-      context: .
-      dockerfile: .docker/ollama/Dockerfile
-    healthcheck:
-      test: ["CMD", "ollama", "list"]
-      interval: 5s
-      timeout: 5s
-      retries: 20
 
   minio:
     image: ghcr.io/coollabsio/minio:RELEASE.2025-04-22T22-12-26Z

@@ -5,6 +5,8 @@ sentence-transformers==3.3.1
 transformers==4.46.3
 python-multipart==0.0.20
 minio==7.2.15
-ollama
-openai-whisper
-gTTS==2.5.4
+pgvector==0.5.1
+pillow==11.3.0
+google-genai==3.6.1
+langgraph==1.2.24
+langgraph-checkpoint-postgres==3.2.1

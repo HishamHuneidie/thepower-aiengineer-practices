@@ -12,9 +12,12 @@ class AudioService(MultimediaService):
 
     def get(self, name: str) -> Audio:
         """Download file from MinIO"""
-        content, mine = get_file(name)
+        content, mime = get_file(name)
 
-        return Audio(content)
+        audio = Audio(content)
+        audio.mime_type = mime
+
+        return audio
 
 
     def read(self, audio: Audio) -> str:
@@ -23,7 +26,7 @@ class AudioService(MultimediaService):
         return self.llm_service.read_audio(audio)
 
 
-    def generate(self, text: str) -> Audio|None:
+    def generate(self, text: str) -> Audio:
         """Convert text to speech"""
 
         return self.llm_service.generate_audio(text)

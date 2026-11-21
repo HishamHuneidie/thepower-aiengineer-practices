@@ -12,6 +12,11 @@
       <header>
         <p class="eyebrow">THEPOWER · M13-P12</p>
         <h1>Chat</h1>
+        <div class="thread">
+          <label for="thread-id">Conversación (thread_id)</label>
+          <input id="thread-id" value="default" pattern="[A-Za-z0-9_-]{1,64}" autocomplete="off">
+          <label class="speak"><input id="speak" type="checkbox"> Responder con voz</label>
+        </div>
       </header>
       <section id="messages" role="log" aria-label="Conversación" aria-live="polite">
         <p id="empty">Escribe un mensaje para empezar.</p>
@@ -22,7 +27,7 @@
           <input id="message" name="message" placeholder="Escribe aquí…" autocomplete="off">
           <button id="record" type="button" class="secondary" aria-pressed="false">Grabar</button>
           <button id="attach" type="button" class="secondary">Imagen</button>
-          <button id="send" type="submit">Enviar</button>
+          <button id="send" type="submit" disabled>Enviar</button>
         </div>
         <input id="image-file" type="file" accept="image/png,image/jpeg,image/webp" hidden>
         <div id="attachments">

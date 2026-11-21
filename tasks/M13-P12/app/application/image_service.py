@@ -12,9 +12,12 @@ class ImageService(MultimediaService):
 
     def get(self, name: str) -> Image:
         """Download file from MinIO"""
-        content, mine = get_file(name)
+        content, mime = get_file(name)
 
-        return Image(content)
+        image = Image(content)
+        image.mime_type = mime
+
+        return image
 
 
     def read(self, image: Image) -> str:
